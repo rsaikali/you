@@ -148,6 +148,7 @@ cat > "$ANALYTICS_OUT" <<JSEOF
   s.defer = true;
   s.src = '$UMAMI_PUBLIC_URL/script.js';
   s.setAttribute('data-website-id', '$WEBSITE_ID');
+  s.setAttribute('data-host-url', '$UMAMI_PUBLIC_URL');
   document.head.appendChild(s);
 })();
 JSEOF
