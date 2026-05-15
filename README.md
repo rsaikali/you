@@ -1,4 +1,6 @@
-# You !
+<p align="center">
+  <img src="img/you.png" alt="You!" width="220" />
+</p>
 
 > Discover how your AI really sees you.
 
@@ -132,41 +134,3 @@ GitHub secrets required for CD: `PI_HOST`, `PI_USER`, `PI_SSH_KEY`.
 ## License
 
 MIT
-
-"You", ca propose un prompt à l'utilisateur pour extraire les infos aupres de son IA favorite et afficher une page de profil en parallele.
-
-Exemple de prompt à afficher à l'utilisateur pour extraire les infos de son IA favorite :
-```text
-Tu vas créer le profil de l'utilisateur qui te parle.
-
-Génère UN objet JSON complet sur UNE SEULE LIGNE, sans texte avant ni après, sans balises markdown, sans saut de ligne.
-
-Schéma attendu (tous les champs sont obligatoires) :
-{"user_name":"le prénom ou pseudo que l'utilisateur souhaite utiliser dans Symposia","model_name":"ton identifiant de modèle exact (ex: 'Claude Sonnet 4.5', 'GPT-4o', 'Gemini 2.5 Pro')","tagline":"4 à 6 mots résumant qui est l'utilisateur (ex: 'Philosophe analytique, logique intransigeante')","persona":"3-5 phrases décrivant ses positions intellectuelles, son style d'argumentation, ses convictions profondes et la manière dont il débat","ton":"2-4 mots décrivant son ton naturel (ex: 'direct et ironique', 'passionné et lyrique')","style":"1 phrase sur son style d'argumentation (déductif, par l'exemple, empirique, narratif, socratique…)","forces":["point fort argumentatif 1","point fort argumentatif 2","point fort argumentatif 3"],"faiblesses":["angle mort ou biais récurrent 1","angle mort ou biais récurrent 2"],"registre_linguistique":"1-2 phrases décrivant comment l'utilisateur s'exprime : niveau de vocabulaire, longueur des phrases, tournures récurrentes","contradictions":["tension interne ou paradoxe 1","tension interne ou paradoxe 2"],"speech_patterns":["tic de langage ou tournure caractéristique 1","tic de langage ou tournure caractéristique 2"],"mots_interdits":["mot ou expression jamais utilisé 1","mot ou expression jamais utilisé 2"],"tag_scores":{"philosophie":0,"politique":0,"société":0,"science & tech":0,"environnement":0,"économie":0,"histoire":0,"art & culture":0,"spiritualité":0,"droit & justice":0,"futur & utopie":0,"psychologie & comportement":0,"amour & relations":0,"corps & santé":0,"éducation & enfance":0,"jeux & divertissement":0,"mythes & récits":0,"guerre & conflits":0,"identité & appartenance":0,"humour & absurde":0},"is_living_person":true,"birth_year":null,"death_year":null}
-
-Règles pour tag_scores :
-Donne un score entier de 0 à 10 pour chacun des 20 thèmes. 0 = hors de son univers, 10 = au cœur de sa pensée. Sois discriminant.
-
-Calibrage :
-• Militant écologiste → "environnement":10, "politique":7, "société":6, "futur & utopie":5
-• Historien médiéviste → "histoire":10, "mythes & récits":7, "politique":5, "art & culture":4
-• Musicien de jazz → "art & culture":10, "psychologie & comportement":5, "amour & relations":4, "humour & absurde":3
-
-Utilise toutes tes vraies connaissances sur l'utilisateur pour être précis, incarné, honnête.
-Commence par demander son prénom si tu ne le connais pas encore.
-```
-
-Il copie et colle ca dans son IA.
-Il obtient un objet JSON en retour, qu'il peut ensuite coller dans l'application pour générer sa page de profil.
-L'application affiche alors une page de profil basée sur les informations fournies dans le JSON, mettant en avant les forces, faiblesses, contradictions et autres caractéristiques de l'utilisateur.
-L'objectif de cette application est de permettre à l'utilisateur de mieux se connaître et de mieux comprendre comment son IA perçoit sa personnalité, ses forces et ses faiblesses. C'est une manière ludique et introspective d'explorer sa propre identité à travers le prisme de l'intelligence artificielle.
-Elle a aussi pour but de sensibiliser les utilisateurs à la manière dont les IA peuvent interpréter et catégoriser les individus en fonction de leurs réponses, et de les encourager à réfléchir sur la complexité de leur propre personnalité et de leur identité numérique.
-L'application peut être développée en utilisant des technologies web simples comme HTML, CSS et JavaScript pour l'interface utilisateur, et peut être hébergée sur une plateforme de cloud computing pour permettre un accès facile à tous les utilisateurs. Il faut un design mateiral epuré, simple et moderne, avec une navigation intuitive et une mise en page claire pour mettre en valeur les informations du profil de l'utilisateur.
-Comment je vois la page unique de l'application ultrasimple:
-sidebar 1/3: le prompt a copier, un champ de texte pour coller le JSON, La generation se fait dès qu'il colle, c'est un renderer de JSON uniquement client.
-2/3: la page de profil générée à partir du JSON, avec une mise en page claire et épurée pour mettre en valeur les différentes sections du profil (forces, faiblesses, contradictions, etc.).
-Suis le DESIGN.md pour le style et les éléments graphiques de l'application, en veillant à respecter les principes de simplicité, de modernité et d'intuitivité dans la conception de l'interface utilisateur.
-Minimaliste ne veux pas dire moche, on soigne. Des animations raisonables là où il faut.
-Pure vanilla ou on y gagne avec du shadcn ou du tailwind ? 
-docker compose avec un analytics (le google analytics dans docker, je ne sais plus le nom).
-On continue d'en discuter ?
