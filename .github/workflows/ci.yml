@@ -5,6 +5,11 @@ on:
     branches: [develop]
   pull_request:
     branches: [develop]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   shellcheck:
@@ -12,10 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run ShellCheck on provision.sh
-        uses: koalaman/shellcheck-action@master
-        with:
-          scandir: './scripts'
+      - name: Run ShellCheck
+        run: shellcheck scripts/*.sh
 
   docker-build:
     name: Docker build
