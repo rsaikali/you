@@ -1,0 +1,40 @@
+services:
+  caddy:
+    build: .
+    ports:
+      - "8200:80"
+    restart: unless-stopped
+
+  umami:
+    image: ghcr.io/umami-software/umami:postgresql-latest
+    ports:
+      - "8300:3000" # bound on all interfaces — protected by router NAT (no port forward for 8300)
+    environment:
+      BASE_PATH: /analytics
+      DATABASE_URL: postgresql://umami:${UMAMI_DB_PASSWORD:-umami}@umami-db:5432/umami
+      DATABASE_TYPE: postgresql
+      APP_SECRET: ${UMAMI_SECRET:-change-me-in-production}
+    depends_on:
+      umami-db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  umami-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: umami
+      POSTGRES_USER: umami
+      POSTGRES_PASSWORD: ${UMAMI_DB_PASSWORD:-umami}
+    command: >
+      postgres -c shared_buffers=64MB -c effective_cache_size=512MB -c work_mem=4MB -c maintenance_work_mem=32MB -c max_connections=20 -c synchronous_commit=off
+    volumes:
+      - umami-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U umami -d umami" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  umami-db-data:

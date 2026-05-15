@@ -1,0 +1,12 @@
+.env
+.env.*
+.git
+.gitignore
+node_modules
+test-results
+tests
+playwright.config.js
+package.json
+scripts
+CLAUDE.md
+README.md

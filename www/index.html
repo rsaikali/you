@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr" id="html-root">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>You</title>
+    <meta name="description" content="Génère ton profil intellectuel avec ton IA favorite." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+    <!-- Analytics: populated by 'make provision' -->
+    <script src="analytics.js"></script>
+
+</head>
+
+<body>
+    <div class="layout">
+
+        <!-- ── Sidebar (1/3) ── -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="app-logo">You <span class="logo-accent">!</span></span>
+                <!-- Subtitle -->
+                <div class="subtitle">
+                    <p data-i18n="intro_1">Découvre comment ton IA te voit vraiment.</p>
+                </div>
+                <div class="lang-switcher">
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="fr">FR</button>
+                    <button class="lang-btn" data-lang="es">ES</button>
+                    <button class="lang-btn" data-lang="pt">PT</button>
+                    <button class="lang-btn" data-lang="de">DE</button>
+                </div>
+            </div>
+
+            <div class="sidebar-body">
+
+                <!-- Step 1: prompt -->
+                <div class="sidebar-section">
+                    <div class="section-label" data-i18n="step1">1 · Copie ce prompt</div>
+                    <div class="prompt-wrapper">
+                        <pre class="prompt-text" id="prompt-text"></pre>
+                        <button class="btn btn--copy" id="btn-copy" aria-label="Copier le prompt"
+                            data-i18n-aria="btn_copy_aria">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <rect x="9" y="9" width="13" height="13" rx="2" />
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                            </svg>
+                            <span id="btn-copy-label" data-i18n="btn_copy">Copier</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: user AI -->
+                <div class="sidebar-section">
+                    <div class="section-label"><span data-i18n-html="step2">2 · Ouvre <span class="accent">ton IA</span>
+                            et colle le prompt</span></div>
+                    <div class="ai-links">
+                        <button class="ai-btn" data-url="https://chat.openai.com/">
+                            <img src="/icons/openai.svg" class="ai-icon" alt="" aria-hidden="true" />ChatGPT
+                        </button>
+                        <button class="ai-btn" data-url="https://claude.ai/">
+                            <img src="/icons/anthropic.svg" class="ai-icon" alt="" aria-hidden="true" />Claude
+                        </button>
+                        <button class="ai-btn" data-url="https://gemini.google.com/">
+                            <img src="/icons/googlegemini.svg" class="ai-icon" alt="" aria-hidden="true" />Gemini
+                        </button>
+                    </div>
+                    <span class="section-sublabel" data-i18n="step2_sub">Ou ouvre le tien... peu importe !</span>
+
+                </div>
+
+                <!-- Step 3: JSON paste -->
+                <div class="sidebar-section sidebar-section--input">
+                    <div class="section-label">
+                        <span data-i18n="step3">3 · Colle la réponse ici</span>
+                        <span class="section-sublabel" data-i18n-html="step3_sub">Le rendu se fait dans <span
+                                class="accent">ton navigateur</span>.<br>La réponse collée n’est pas envoyée au
+                            serveur.</span>
+                    </div>
+
+                    <textarea id="json-input" placeholder='{"user_name": "...", "model_name": "...", ...}'
+                        data-i18n-placeholder="json_placeholder" spellcheck="false" autocomplete="off"
+                        autocorrect="off"></textarea>
+                    <div class="json-error" id="json-error" hidden>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+                        <span data-i18n="json_error">JSON invalide — vérifie la syntaxe.</span>
+                    </div>
+                </div>
+
+                <!-- Step 4: revisit -->
+                <div class="sidebar-section sidebar-section--step4">
+                    <div class="section-label">
+                        <span data-i18n="step4">4 · Visualise ton profil</span>
+                        <span class="section-sublabel" data-i18n="step4_sub">Selon tes réglages de mémoire, les
+                            résultats peuvent être plus ou moins précis.</span>
+                    </div>
+                    <p class="step4-line" data-i18n-html="step4_line1">Reviens régulièrement <span
+                            class="accent">!</span></p>
+                    <p class="step4-line" data-i18n="step4_line2">Ton profil évolue avec tes conversations...</p>
+                </div>
+
+            </div>
+        </aside>
+
+        <!-- ── Profile area (2/3) ── -->
+        <main class="main" id="main">
+            <div class="main-scroll" id="main-scroll">
+
+                <!-- Empty state -->
+                <div class="empty-state" id="empty-state">
+                    <div class="empty-state-icon">
+                        <svg width="52" height="52" viewBox="0 0 52 52" fill="none" aria-hidden="true">
+                            <circle cx="26" cy="26" r="24" stroke="var(--border-strong)" stroke-width="1.5"
+                                stroke-dasharray="5 3.5" />
+                            <circle cx="26" cy="22" r="8" stroke="var(--border-strong)" stroke-width="1.5" />
+                            <path d="M10 44c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="var(--border-strong)"
+                                stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <p class="empty-state-title" data-i18n="empty_title">Ton profil apparaît ici</p>
+                    <p class="empty-state-sub" data-i18n="empty_sub">Prêt à des surprises ?</p>
+                </div>
+
+                <!-- Profile (injected by JS) -->
+                <div class="profile" id="profile" hidden>
+                    <!-- Verdict -->
+                    <div class="verdict-block anim-item">
+                        <div class="verdict-title">
+                            <span></span>
+                            <span class="verdict-you"><span id="p-verdict-name">You</span><span
+                                    class="verdict-excl">!</span></span>
+                            <div class="verdict-by">
+                                <span class="verdict-by-label" data-i18n="verdict_by">par</span>
+                                <div class="verdict-by-pills">
+                                    <div class="model-pill" id="p-model-pill" hidden></div>
+                                    <button class="share-btn" id="btn-tweet" hidden
+                                        aria-label="Partager sur X / Twitter">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"
+                                            aria-hidden="true">
+                                            <path
+                                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.632L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                        </svg>
+                                        <span data-i18n="btn_tweet">Tweet</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="verdict-tagline" id="p-verdict-tagline"></p>
+                        <p class="verdict-text" id="p-verdict"></p>
+                    </div>
+
+                    <!-- Security alert -->
+                    <div class="security-alert" id="p-security-alert" hidden></div>
+
+                    <!-- Persona / Forces / Style -->
+                    <div class="cards-layout-2-1">
+                        <div class="cards-layout-left">
+                            <div class="card anim-item">
+                                <div class="card-label" data-i18n="card_persona">Ton persona</div>
+                                <div id="p-persona"></div>
+                            </div>
+                            <div class="card anim-item">
+                                <div class="card-label" data-i18n="card_philosophy">Ta philosophie</div>
+                                <p class="card-value" id="p-philosophy"></p>
+                            </div>
+                            <div class="cards-row anim-item">
+                                <div class="card card--ok">
+                                    <div class="card-label" data-i18n="card_forces">Tes forces</div>
+                                    <ul class="trait-list" id="p-forces"></ul>
+                                </div>
+                                <div class="card card--danger">
+                                    <div class="card-label" data-i18n="card_faiblesses">Tes faiblesses</div>
+                                    <ul class="trait-list" id="p-faiblesses"></ul>
+                                </div>
+                            </div>
+                            <div class="card anim-item">
+                                <div class="card-label" data-i18n="card_contradictions">Tes contradictions</div>
+                                <ul class="trait-list" id="p-contradictions"></ul>
+                            </div>
+                            <div class="card anim-item">
+                                <div class="card-label" data-i18n="card_ai_knows">Ce que ton IA sait de toi</div>
+                                <ul class="trait-list" id="p-ai-knows"></ul>
+                            </div>
+                        </div>
+                        <div class="cards-layout-left">
+                            <div class="card anim-item">
+                                <div class="card-label" data-i18n="card_themes">Ton univers thématique</div>
+                                <div class="tag-scores-grid" id="p-tag-scores"></div>
+                            </div>
+                            <div class="card anim-item">
+                                <div class="card-label" data-i18n="card_style">Ton style</div>
+                                <p class="style-tone" id="p-ton"></p>
+                                <p class="card-value" id="p-style"></p>
+                            </div>
+                            <div class="card anim-item">
+                                <div class="card-label" data-i18n="card_registre">Ton registre linguistique</div>
+                                <p class="card-value" id="p-registre"></p>
+                            </div>
+                            <div class="card anim-item">
+                                <div class="card-label" data-i18n="card_speech">Tes tournures récurrentes</div>
+                                <ul class="trait-list" id="p-speech-patterns"></ul>
+                            </div>
+                            <div class="card card--question anim-item">
+                                <div class="card-label" data-i18n="card_next_project">Ton prochain projet</div>
+                                <p class="card-value" id="p-next-project"></p>
+                            </div>
+                            <div class="card card--question anim-item">
+                                <div class="card-label" data-i18n="card_never_admit">Ce que tu n'admettras jamais</div>
+                                <p class="card-value" id="p-never-admit"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card--quote anim-item">
+                        <div class="card-label" data-i18n="card_next_question">Ta prochaine question
+                        </div>
+                        <p class="quote-text" id="p-next-question"></p>
+                    </div>
+
+
+
+                </div>
+
+                <!-- Mentions légales -->
+                <div class="mentions-panel" id="mentions-panel" hidden>
+
+                    <!-- Header — verdict-block style -->
+                    <div class="verdict-block">
+                        <div class="verdict-title">
+                            <button class="mentions-back" id="btn-mentions-back">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                                    aria-hidden="true">
+                                    <path d="M19 12H5M12 5l-7 7 7 7" />
+                                </svg>
+                                Retour
+                            </button>
+                            <span class="mentions-title">Mentions légales You<span class="verdict-excl">!</span></span>
+                            <span></span>
+                        </div>
+                        <p class="verdict-tagline">mai 2026</p>
+                    </div>
+
+                    <!-- Cards -->
+                    <div class="mentions-body">
+                        <div class="cards-layout-2-1">
+
+                            <div class="cards-layout-left">
+                                <div class="card">
+                                    <div class="card-label">Éditeur du site</div>
+                                    <p class="card-value"><strong>Roland Saikali</strong><br>
+                                        you.saikali.fr — édité à titre personnel et non commercial.<br>
+                                        <a href="mailto:roland@saikali.fr">roland@saikali.fr</a>
+                                    </p>
+                                </div>
+                                <div class="card">
+                                    <div class="card-label">Hébergement</div>
+                                    <p class="card-value">Auto-hébergé sur un serveur personnel situé
+                                        en France. L’éditeur assure lui-même l’hébergement du site et de ses données.
+                                    </p>
+                                </div>
+                                <div class="card">
+                                    <div class="card-label">Vie privée et mesure d’audience</div>
+                                    <div class="legal-highlight">
+                                        <p><strong>La réponse collée par l’utilisateur n’est ni transmise ni stockée par
+                                                le site.</strong>
+                                            Le rendu du profil s’effectue exclusivement dans le navigateur.
+                                            Le site utilise en revanche une mesure d’audience anonymisée et
+                                            auto-hébergée pour suivre l’usage et la disponibilité du service.</p>
+                                    </div>
+                                    <ul class="trait-list">
+                                        <li>Aucun compte utilisateur, aucune inscription</li>
+                                        <li>Aucun cookie publicitaire ni traçage cross-site</li>
+                                        <li>Aucune base de données de profils utilisateurs côté serveur</li>
+                                        <li>La réponse collée reste dans le navigateur et n’est pas envoyée au serveur
+                                        </li>
+                                        <li>Le monitoring et la mesure d’audience n’incluent pas le contenu du profil
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="cards-layout-left">
+                                <div class="card">
+                                    <div class="card-label">Responsabilité</div>
+                                    <p class="card-value">Le site est un outil de visualisation. Les profils sont
+                                        générés
+                                        par des services d’IA tiers (ChatGPT, Claude, Gemini…) à la demande exclusive de
+                                        l’utilisateur. <strong>L’utilisateur est seul responsable</strong> du choix du
+                                        sujet,
+                                        du contenu produit par l’IA qu’il utilise et de l’usage qu’il fait du résultat.
+                                    </p>
+                                </div>
+                                <div class="card">
+                                    <div class="card-label">Monitoring et analytique</div>
+                                    <p class="card-value">Le site utilise <strong>Umami</strong>, une solution
+                                        auto-hébergée de mesure d’audience, afin d’obtenir des statistiques agrégées et
+                                        un suivi technique minimal du service. Cette mesure est configurée sans cookie
+                                        publicitaire et sans transmission de la réponse collée par l’utilisateur. Les
+                                        données
+                                        restent sous le contrôle de l’éditeur et ne sont pas revendues à des tiers.</p>
+                                </div>
+                                <div class="card">
+                                    <div class="card-label">Propriété intellectuelle</div>
+                                    <p class="card-value">Les marques ChatGPT, Claude et Gemini
+                                        appartiennent
+                                        à leurs propriétaires respectifs. Leur mention n’implique aucun partenariat.</p>
+                                </div>
+                                <div class="card">
+                                    <div class="card-label">Droit applicable</div>
+                                    <p class="card-value">Les présentes mentions légales sont soumises au droit
+                                        français.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div><!-- /.mentions-panel -->
+
+            </div><!-- /.main-scroll -->
+
+            <footer class="main-footer">
+                <p class="footer-disclaimer" data-i18n="footer_disclaimer">Profil généré par intelligence artificielle —
+                    à lire comme un miroir, pas comme une vérité.</p>
+                <nav class="footer-links">
+                    <button class="legal-link" id="btn-mentions" data-i18n="btn_mentions">Mentions légales</button>
+                    <a class="legal-link" href="mailto:roland@saikali.fr">roland@saikali.fr</a>
+                </nav>
+            </footer>
+
+        </main>
+
+    </div><!-- /.layout -->
+
+    <script src="prompt.js"></script>
+    <script src="i18n.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

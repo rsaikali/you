@@ -1,0 +1,8 @@
+# Development overrides — loaded automatically by 'docker compose up'.
+# Mounts sources live so changes are reflected instantly without rebuild.
+# Production (Pi): docker compose -f docker-compose.yml up -d --build
+services:
+  caddy:
+    volumes:
+      - ./www:/srv
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
