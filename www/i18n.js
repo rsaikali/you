@@ -8,7 +8,7 @@ const LOCALES = {
 
     /* ── French (source of truth) ─────────────────────────────────────── */
     fr: {
-        title: 'You — Ton profil par ton IA',
+        title: 'You',
         description: 'Génère ton profil intellectuel avec ton IA favorite.',
 
         intro_1: 'Découvre comment ton IA te voit vraiment.',
@@ -59,7 +59,7 @@ const LOCALES = {
 
     /* ── English ─────────────────────────────────────────────────────── */
     en: {
-        title: 'You — Your AI profile',
+        title: 'You',
         description: 'Generate your intellectual profile with your favourite AI.',
 
         intro_1: 'Discover how your AI really sees you.',
@@ -110,7 +110,7 @@ const LOCALES = {
 
     /* ── Spanish ─────────────────────────────────────────────────────── */
     es: {
-        title: 'You — Tu perfil por tu IA',
+        title: 'You',
         description: 'Genera tu perfil intelectual con tu IA favorita.',
 
         intro_1: 'Descubre cómo tu IA te ve realmente.',
@@ -163,7 +163,7 @@ const LOCALES = {
 
     /* ── Portuguese ──────────────────────────────────────────────────── */
     pt: {
-        title: 'You — O teu perfil pela tua IA',
+        title: 'You',
         description: 'Gera o teu perfil intelectual com a tua IA favorita.',
 
         intro_1: 'Descobre como a tua IA te vê realmente.',
@@ -216,7 +216,7 @@ const LOCALES = {
 
     /* ── German ──────────────────────────────────────────────────────── */
     de: {
-        title: 'You — Dein KI-Profil',
+        title: 'You',
         description: 'Erstelle dein intellektuelles Profil mit deiner Lieblings-KI.',
 
         intro_1: 'Entdecke, wie deine KI dich wirklich sieht.',
