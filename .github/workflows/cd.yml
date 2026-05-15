@@ -9,7 +9,5 @@ jobs:
     name: Deploy to Raspberry Pi
     runs-on: [self-hosted, linux, arm64]
     steps:
-      - uses: actions/checkout@v4
-
       - name: Deploy
         run: cd ~/you && make deploy
