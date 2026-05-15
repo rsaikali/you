@@ -7,12 +7,9 @@ on:
 jobs:
   deploy:
     name: Deploy to Raspberry Pi
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, arm64]
     steps:
-      - name: SSH deploy
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.PI_HOST }}
-          username: ${{ secrets.PI_USER }}
-          key: ${{ secrets.PI_SSH_KEY }}
-          script: cd ~/you && make deploy
+      - uses: actions/checkout@v4
+
+      - name: Deploy
+        run: cd ~/you && make deploy
