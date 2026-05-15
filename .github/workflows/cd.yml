@@ -8,6 +8,9 @@ jobs:
   deploy:
     name: Deploy to Raspberry Pi
     runs-on: [self-hosted, linux, arm64]
+    environment:
+      name: production
+      url: https://you.saikali.fr
     steps:
       - name: Deploy
         run: cd ~/you && make deploy
