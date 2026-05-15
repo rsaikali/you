@@ -10,7 +10,6 @@ services:
     ports:
       - "8300:3000" # bound on all interfaces — protected by router NAT (no port forward for 8300)
     environment:
-      BASE_PATH: /analytics
       DATABASE_URL: postgresql://umami:${UMAMI_DB_PASSWORD:-umami}@umami-db:5432/umami
       DATABASE_TYPE: postgresql
       APP_SECRET: ${UMAMI_SECRET:-change-me-in-production}
