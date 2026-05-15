@@ -2,6 +2,11 @@
   <img src="img/you.png" alt="You!" width="600" />
 </p>
 
+<p align="center">
+  <a href="https://github.com/rsaikali/you/actions/workflows/ci.yml"><img src="https://github.com/rsaikali/you/actions/workflows/ci.yml/badge.svg?branch=develop" alt="CI" /></a>
+  <a href="https://github.com/rsaikali/you/actions/workflows/cd.yml"><img src="https://github.com/rsaikali/you/actions/workflows/cd.yml/badge.svg?branch=main" alt="CD" /></a>
+</p>
+
 "Discover how your AI really sees you."
 
 **You** is a single-page web app with no backend. Paste a prompt into your favourite AI (ChatGPT, Claude, Gemini…), get back a JSON profile, paste it into the app — a profile card renders entirely client-side.
