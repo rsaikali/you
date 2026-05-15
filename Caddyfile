@@ -13,6 +13,11 @@
         # HSTS is intentionally absent here — nginx handles it at the TLS layer
     }
 
+    # Umami analytics — proxy to the umami container
+    handle /analytics/* {
+        reverse_proxy umami:3000
+    }
+
     # Fonts: cache forever (static binary assets, filename won't change)
     @fonts path /fonts/*
     header @fonts Cache-Control "public, max-age=31536000, immutable"
