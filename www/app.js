@@ -226,8 +226,15 @@ function renderProfile(d) {
     // Tag scores (build DOM first, animate bars after reveal)
     renderTagScores('p-tag-scores', d.tag_scores);
 
-    // Track profile generation without sending profile-derived metadata.
-    track('profile_rendered');
+    // Track profile generation with content metadata (no personal data)
+    const _topTheme = d.tag_scores
+        ? Object.entries(d.tag_scores).sort((a, b) => b[1] - a[1])[0]?.[0]
+        : 'unknown';
+    track('profile_rendered', {
+        model: d.model_name || 'unknown',
+        top_theme: _topTheme || 'unknown',
+        is_living: d.is_living_person ?? true,
+    });
 
     // Store for sharing
     _currentProfile = d;

@@ -142,15 +142,14 @@ Tag scores: integer 0–10. 0 = outside their universe, 10 = at the core of thei
 The file is listed in `.gitignore`.
 Events tracked:
 
-| Event              | Triggered when                        |
-|--------------------|---------------------------------------|
-| `prompt_copied`    | User clicks the copy button           |
-| `json_invalid`     | Pasted JSON fails to parse (debounced)|
-| `profile_rendered` | A valid profile is successfully drawn |
-| `language_changed` | User clicks a lang-bar button         |
-
-`profile_rendered` carries `{ model, top_theme }` as Umami custom data.
-`language_changed` carries `{ lang }` (e.g. `"fr"`, `"en"`).
+| Event              | Triggered when                                  | Custom data                              |
+|--------------------|-------------------------------------------------|------------------------------------------|
+| `prompt_copied`    | User clicks the copy button                     | —                                        |
+| `ai_opened`        | User clicks an AI shortcut button               | `{ ai: "ChatGPT" }`                      |
+| `json_invalid`     | Pasted JSON fails to parse (debounced)          | —                                        |
+| `profile_rendered` | A valid profile is successfully drawn           | `{ model, top_theme, is_living }`        |
+| `profile_shared`   | User clicks the share (tweet) button            | `{ method: "tweet" }`                    |
+| `language_changed` | User clicks a lang-bar button                   | `{ lang }` (e.g. `"fr"`, `"en"`)        |
 
 ---
 
