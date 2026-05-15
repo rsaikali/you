@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="img/you.png" alt="You!" width="220" />
+  <img src="img/you.png" alt="You!" width="600" />
 </p>
 
-> Discover how your AI really sees you.
+"Discover how your AI really sees you."
 
 **You** is a single-page web app with no backend. Paste a prompt into your favourite AI (ChatGPT, Claude, Gemini…), get back a JSON profile, paste it into the app — a profile card renders entirely client-side.
 
